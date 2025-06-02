@@ -85,6 +85,10 @@
     userName = "Hubert Liu";
     userEmail = "hubertliu100@gmail.com";
 
+    signing.signByDefault = true;
+    signing.format = "ssh"; 
+    signing.key = "~/.ssh/id_ed25519.pub";
+
     extraConfig = {
       init.defaultBranch = "main";
     };
