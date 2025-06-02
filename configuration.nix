@@ -94,7 +94,7 @@
     eza
   ];
 
-  environment.variables.EDITOR = "neovim";
+  environment.variables.EDITOR = "nvim";
  
 
   # Some programs need SUID wrappers, can be configured further or are

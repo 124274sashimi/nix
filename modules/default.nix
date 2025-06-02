@@ -6,5 +6,6 @@
   ...
 }: {
   imports = [
+    ./caddy
   ];
 }
