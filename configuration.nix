@@ -10,9 +10,16 @@
       ./hardware-configuration.nix
     ];
 
+  # Use the systemd boot loader
   boot.loader.systemd-boot.enable = true;
   boot.kernelParams = ["nomodeset" "video=uvesafb:mode_options=1024x768-16@60,mtrr=0,scroll=ywrap,noedid"];
   boot.zfs.extraPools = [ "zpool" ];
+
+  # Disable all sleep
+  systemd.targets.sleep.enable = false;
+  systemd.targets.suspend.enable = false;
+  systemd.targets.hibernate.enable = false;
+  systemd.targets.hybrid-sleep.enable = false;
 
   # Use the GRUB 2 boot loader.
   # boot.loader.grub.enable = true;
@@ -24,6 +31,15 @@
 
   networking.hostId = "d0337a37";
   networking.hostName = "hamachi"; # Define your hostname.
+
+  networking.nat = {
+    enable = true;
+    # Use "ve-*" when using nftables instead of iptables
+    internalInterfaces = ["ve-+"];
+    externalInterface = "ens3";
+    # Lazy IPv6 connectivity for the container
+    enableIPv6 = true;
+  };
 
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
