@@ -36,7 +36,7 @@
     enable = true;
     # Use "ve-*" when using nftables instead of iptables
     internalInterfaces = ["ve-+"];
-    externalInterface = "ens3";
+    externalInterface = "enp7s0";
     # Lazy IPv6 connectivity for the container
     enableIPv6 = true;
   };
@@ -44,6 +44,24 @@
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.networkmanager.unmanaged = [ "interface-name:ve-*" ];
+
+  # networking = {
+  #   bridges.br0.interfaces = [ "enp7s0" ]; # Adjust interface accordingly
+  #
+  #   # Get bridge-ip with DHCP
+  #   useDHCP = false;
+  #   interfaces."br0".useDHCP = true;
+  #
+  #   # Set bridge-ip static
+  #   interfaces."br0".ipv4.addresses = [{
+  #     address = "192.168.100.3";
+  #     prefixLength = 24;
+  #   }];
+  #   defaultGateway = "192.168.100.1";
+  #   nameservers = [ "192.168.100.1" ];
+  # };
+  #
 
   # Set your time zone.
   time.timeZone = "US/Pacific";
