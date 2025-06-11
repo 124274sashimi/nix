@@ -12,6 +12,7 @@
 
   # Use the systemd boot loader
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.memtest86.enable = true;
   boot.kernelParams = ["nomodeset" "video=uvesafb:mode_options=1024x768-16@60,mtrr=0,scroll=ywrap,noedid"];
   boot.zfs.extraPools = [ "zpool" ];
 
@@ -43,8 +44,8 @@
 
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
-  networking.networkmanager.unmanaged = [ "interface-name:ve-*" ];
+  # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  # networking.networkmanager.unmanaged = [ "interface-name:ve-*" ];
 
   # networking = {
   #   bridges.br0.interfaces = [ "enp7s0" ]; # Adjust interface accordingly

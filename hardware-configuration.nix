@@ -11,6 +11,8 @@
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ ];
+  boot.kernelParams = [ "processor.max_cstate=5" "pcie_aspm=off" ];
+
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
