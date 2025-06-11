@@ -7,14 +7,18 @@
   containers.immich = {
     autoStart = true;
     privateNetwork = true;
-    # hostBridge = "br0";
     hostAddress = "192.168.100.5";
     localAddress = "192.168.100.6";
-    # localAddress = "192.168.100.6/24";
     bindMounts = {
       "/var/lib/immich" = {
         hostPath = "/persist/immich";
         isReadOnly = false;
+      };
+
+      # config container dns
+      "/etc/resolv.conf" = {
+        hostPath = "/etc/resolv.conf";
+        isReadOnly = true;
       };
 
       #
