@@ -4,6 +4,10 @@
   inputs = {
     # NixOS official package source, using the nixos-25.05 branch here
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+
+    agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
+
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       # The `follows` keyword in inputs is used for inheritance.
@@ -14,7 +18,7 @@
     };
   };
 
-  outputs = inputs @ { nixpkgs, home-manager, ... } : {
+  outputs = inputs @ { self, nixpkgs, home-manager, agenix, ... } : {
     nixosConfigurations.hamachi = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
@@ -22,6 +26,7 @@
         # Import the previous configuration.nix we used,
         # so the old configuration file still takes effect
         ./configuration.nix
+	agenix.nixosModules.default
 	./modules
 
 	# make home-manager as a module of nixos
