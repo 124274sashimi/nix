@@ -10,5 +10,6 @@
     ./immich.nix
     ./agenix-cli.nix
     ./oink.nix
+    ./zfs.nix
   ];
 }
