@@ -11,7 +11,7 @@
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ ];
-  boot.kernelParams = [ "processor.max_cstate=5" "pcie_aspm=off" ];
+  # boot.kernelParams = [ "processor.max_cstate=5" "pcie_aspm=off" "rcu_nocbs=0-11" ];
   boot.extraModprobeConfig = ''
     options iwlwifi 11n_disable=1 swcrypto=0 bt_coex_active=0 power_save=0
     options iwlmvm power_scheme=1 

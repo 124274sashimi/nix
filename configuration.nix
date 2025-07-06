@@ -41,6 +41,7 @@
     # Lazy IPv6 connectivity for the container
     enableIPv6 = true;
   };
+  networking.nftables.enable = false;
 
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -115,6 +116,16 @@
     ];
   };
 
+  users.users.jliu = { 
+    isNormalUser = true;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIS2bO2QPK0yFPr+K/LVS3KkXR44sItK62CMkLABTJWY jliu@iMac"
+    ];
+    packages = with pkgs; [
+      iperf3
+    ];
+  };
+
   # programs.firefox.enable = true;
 
   # List packages installed in system profile.
@@ -141,6 +152,8 @@
   # };
 
   # List services that you want to enable:
+
+  # Enable OpenSSH daemon.
   services.openssh = {
     enable = true;
     settings = {
@@ -150,12 +163,12 @@
     openFirewall = true;
   };
 
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  # Open iperf3 firewall port
+  # services.iperf3.openFirewall = true;
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [ 5201 ];
+  networking.firewall.allowedUDPPorts = [ 5201 ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
