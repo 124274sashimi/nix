@@ -18,7 +18,11 @@
     };
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, agenix, ... } : {
+  outputs = inputs @ { self, nixpkgs, home-manager, agenix, ... } : let 
+    pkgs = import nixpkgs {
+      config.allowUnfree = true;
+    };
+  in {
     nixosConfigurations.hamachi = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
