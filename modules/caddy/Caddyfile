@@ -12,14 +12,26 @@
 # https://caddyserver.com/docs/caddyfile/concepts#addresses
 
 immich.sashimii.com {
+    log {
+        format console
+        output file /var/log/caddy/access.log
+    }
     reverse_proxy 192.168.100.6:2283
 }
 
 status.sashimii.com {
+    log {
+        format console
+        output file /var/log/caddy/access.log
+    }
     reverse_proxy localhost:3001
 }
 
 ismyhouseonfire.sashimii.com {
+    log {
+        format console
+        output file /var/log/caddy/access.log
+    }
     respond "Probably Not!"
 }
 # http:// {
