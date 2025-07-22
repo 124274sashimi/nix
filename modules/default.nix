@@ -11,5 +11,6 @@
     ./agenix-cli.nix
     ./oink.nix
     ./zfs.nix
+    ./minecraft-server.nix
   ];
 }
