@@ -52,6 +52,12 @@
       options = [ "zfsutil" ];
     };
 
+  fileSystems."/scratch" =
+    { device = "zpool/scratch";
+      fsType = "zfs";
+      options = [ "zfsutil" ];
+    };
+
   swapDevices = [{
     device = "/dev/disk/by-partuuid/ccdb9aa5-f661-4d9b-8113-6f83b0c732a6";
     randomEncryption = true;

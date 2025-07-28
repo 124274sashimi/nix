@@ -12,5 +12,6 @@
     ./oink.nix
     ./zfs.nix
     ./minecraft-server.nix
+    ./filebrowser
   ];
 }

@@ -1,0 +1,24 @@
+server:
+  port: 2284
+  baseURL:  "/"
+  logging:
+    - levels: "info|warning|error"
+  sources:
+    - path: "/bulk"
+      # config: defaultEnabled
+    - path: "/data"
+userDefaults:
+  preview:
+    image: true
+    popup: true
+    video: true
+    office: true
+    highQuality: false
+  darkMode: true
+  disableSettings: false
+  singleClick: false
+  permissions:
+    admin: false
+    modify: true
+    share: false
+    api: false
