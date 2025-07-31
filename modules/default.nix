@@ -9,7 +9,7 @@
     ./caddy
     ./immich.nix
     ./agenix-cli.nix
-    ./oink.nix
+    ./ddclient
     ./zfs.nix
     ./minecraft-server.nix
     ./filebrowser
