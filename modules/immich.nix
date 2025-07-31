@@ -3,7 +3,8 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   containers.immich = {
     autoStart = true;
     privateNetwork = true;
@@ -22,20 +23,22 @@
       };
 
       #
-	#      "/var/lib/postgresql/${config.services.postgresql.package.psqlSchema}" = {
-	#      	hostPath = "/persist/immich-db";
-	# isReadOnly = false;
-	#      };
+      #      "/var/lib/postgresql/${config.services.postgresql.package.psqlSchema}" = {
+      #      	hostPath = "/persist/immich-db";
+      # isReadOnly = false;
+      #      };
     };
 
-    config = let
-      hostConfig = config;
-    in
+    config =
+      let
+        hostConfig = config;
+      in
       {
         config,
         pkgs,
         ...
-      }: {
+      }:
+      {
         networking.useHostResolvConf = lib.mkForce false;
         system.stateVersion = "25.05";
 
@@ -45,10 +48,10 @@
           openFirewall = true;
           host = "0.0.0.0"; # within the container
 
-	  environment = {
-	    TZ="PDT";
-	    # DB_PASSWORD="Uf9PuxpYzaUNaGgU";
-	  };
+          environment = {
+            TZ = "PDT";
+            # DB_PASSWORD="Uf9PuxpYzaUNaGgU";
+          };
 
         };
 

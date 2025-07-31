@@ -3,7 +3,8 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   services = {
     sanoid = {
       enable = true;
@@ -15,8 +16,8 @@
         hourly = 24;
         daily = 7;
         weekly = 12;
-	monthly = 12;
-	yearly = 3;
+        monthly = 12;
+        yearly = 3;
       };
     };
   };

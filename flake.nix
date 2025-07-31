@@ -18,32 +18,42 @@
     };
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, agenix, ... } : let 
-    pkgs = import nixpkgs {
-      config.allowUnfree = true;
-    };
-  in {
-    nixosConfigurations.hamachi = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = { inherit inputs; };
-      modules = [
-        # Import the previous configuration.nix we used,
-        # so the old configuration file still takes effect
-        ./configuration.nix
-	agenix.nixosModules.default
-	./modules
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      home-manager,
+      agenix,
+      ...
+    }:
+    let
+      pkgs = import nixpkgs {
+        config.allowUnfree = true;
+      };
+    in
+    {
+      nixosConfigurations.hamachi = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          # Import the previous configuration.nix we used,
+          # so the old configuration file still takes effect
+          ./configuration.nix
+          agenix.nixosModules.default
+          ./modules
 
-	# make home-manager as a module of nixos
-        # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
-        home-manager.nixosModules.home-manager {
-	  home-manager.useGlobalPkgs = true;
-	  home-manager.useUserPackages = true;
-	  home-manager.users.sashimi = import ./home/profile.nix;
+          # make home-manager as a module of nixos
+          # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.sashimi = import ./home/profile.nix;
 
-	  # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
-	}
-      ];
+            # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
+          }
+        ];
+      };
+      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-tree;
     };
-    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-tree;
-  };
 }

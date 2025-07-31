@@ -2,13 +2,19 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Allow Unfree software
   nixpkgs.config.allowUnfree = true;
@@ -16,7 +22,10 @@
   # Use the systemd boot loader
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.memtest86.enable = true;
-  boot.kernelParams = ["nomodeset" "video=uvesafb:mode_options=1024x768-16@60,mtrr=0,scroll=ywrap,noedid"];
+  boot.kernelParams = [
+    "nomodeset"
+    "video=uvesafb:mode_options=1024x768-16@60,mtrr=0,scroll=ywrap,noedid"
+  ];
   boot.zfs.extraPools = [ "zpool" ];
 
   # Disable all sleep
@@ -39,7 +48,7 @@
   networking.nat = {
     enable = true;
     # Use "ve-*" when using nftables instead of iptables
-    internalInterfaces = ["ve-+"];
+    internalInterfaces = [ "ve-+" ];
     externalInterface = "enp7s0";
     # Lazy IPv6 connectivity for the container
     enableIPv6 = true;
@@ -86,9 +95,6 @@
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
 
-
-  
-
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
@@ -110,7 +116,10 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.sashimi = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [
+      "wheel" # Enable 'sudo' for the user.
+      "docker"
+    ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOWtHg2vvIXWFOvy6UoicvBQM9jItyOCOhoCZy1rkj1Y hubertliu100@gmail.com"
     ];
@@ -120,7 +129,7 @@
     linger = true;
   };
 
-  users.users.jliu = { 
+  users.users.jliu = {
     isNormalUser = true;
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIS2bO2QPK0yFPr+K/LVS3KkXR44sItK62CMkLABTJWY jliu@iMac"
@@ -135,7 +144,10 @@
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
@@ -149,7 +161,6 @@
   ];
 
   environment.variables.EDITOR = "nvim";
- 
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -158,7 +169,6 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
-
 
   # Enable common container config files in /etc/containers
   virtualisation.containers.enable = true;
@@ -191,8 +201,14 @@
   # services.iperf3.openFirewall = true;
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 5201 25565 ];
-  networking.firewall.allowedUDPPorts = [ 5201 25565 ];
+  networking.firewall.allowedTCPPorts = [
+    5201
+    25565
+  ];
+  networking.firewall.allowedUDPPorts = [
+    5201
+    25565
+  ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
@@ -209,7 +225,7 @@
 
   # -- https://nixos.wiki/wiki/Nvidia --
   # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.nvidia = {
 
@@ -218,7 +234,7 @@
 
     # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
     # Enable this if you have graphical corruption issues or application crashes after waking
-    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead 
+    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
     # of just the bare essentials.
     powerManagement.enable = false;
 
@@ -228,14 +244,14 @@
 
     # Use the NVidia open source kernel module (not to be confused with the
     # independent third-party "nouveau" open source driver).
-    # Support is limited to the Turing and later architectures. Full list of 
-    # supported GPUs is at: 
-    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
+    # Support is limited to the Turing and later architectures. Full list of
+    # supported GPUs is at:
+    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
     # Only available from driver 515.43.04+
     open = false;
 
     # Enable the Nvidia settings menu,
-	# accessible via `nvidia-settings`.
+    # accessible via `nvidia-settings`.
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
@@ -262,4 +278,3 @@
   system.stateVersion = "25.05"; # Did you read the comment?
 
 }
-

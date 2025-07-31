@@ -1,4 +1,5 @@
-args @ {pkgs, ...}: {
+args@{ pkgs, ... }:
+{
   programs.fish = {
     enable = true;
     interactiveShellInit = ''
