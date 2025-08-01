@@ -7,9 +7,9 @@
 {
   virtualisation.oci-containers.containers = {
     minecraft = {
-      image = "itzy/minecraft-server";
+      image = "itzg/minecraft-server";
       ports = [
-        "25567:25565"
+        "25565:25565"
       ];
       volumes = [
         "/persist/minecraft/alyssa:/data"
@@ -22,6 +22,7 @@
         INIT_MEMORY = "2G";
         MAX_MEMORY = "12G";
       };
+      user = "986:986";
     };
   };
 
@@ -31,4 +32,11 @@
       allowedUDPPorts = [ 25565 ];
     };
   };
+
+  users.users.minecraft = {
+    isSystemUser = true;
+    uid = 986;
+    group = "minecraft";
+  };
+  users.groups.minecraft.gid = 986;
 }
