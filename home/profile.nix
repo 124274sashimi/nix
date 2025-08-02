@@ -79,6 +79,11 @@
     ethtool
     pciutils # lspci
     usbutils # lsusb
+
+    # C/C++
+    libgcc
+    gnumake
+
   ];
 
   # basic configuration of git, please change to your own

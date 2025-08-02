@@ -6,6 +6,7 @@
 }:
 {
   services = {
+    zfs.autoScrub.enable = true;
     sanoid = {
       enable = true;
       datasets."zpool/safe" = {
