@@ -31,6 +31,7 @@
     eza # A modern replacement for ‘ls’
     fzf # A command-line fuzzy finder
     tmux # Terminal multiplexer
+    hyperfine # Benchmarking tool
 
     # networking tools
     mtr # A network diagnostic tool

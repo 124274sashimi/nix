@@ -26,7 +26,10 @@
     "nomodeset"
     "video=uvesafb:mode_options=1024x768-16@60,mtrr=0,scroll=ywrap,noedid"
   ];
-  boot.zfs.extraPools = [ "zpool" ];
+  boot.zfs.extraPools = [
+    "zpool"
+    "backup"
+  ];
 
   # Disable all sleep
   systemd.targets.sleep.enable = false;
@@ -122,6 +125,7 @@
     ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOWtHg2vvIXWFOvy6UoicvBQM9jItyOCOhoCZy1rkj1Y hubertliu100@gmail.com"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPTShXrZoI3BJQjhq8D/BV7AIvuphAztSSpIicpzd4jS sashimi@Aquarium"
     ];
     packages = with pkgs; [
       tree
