@@ -82,7 +82,7 @@
     usbutils # lsusb
 
     # C/C++
-    libgcc
+    gcc
     gnumake
 
   ];

@@ -18,6 +18,8 @@
 
   # Allow Unfree software
   nixpkgs.config.allowUnfree = true;
+  # Allow CUDA
+  nixpkgs.config.cudaSupport = true;
 
   # Use the systemd boot loader
   boot.loader.systemd-boot.enable = true;
@@ -125,10 +127,8 @@
     ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOWtHg2vvIXWFOvy6UoicvBQM9jItyOCOhoCZy1rkj1Y hubertliu100@gmail.com"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPTShXrZoI3BJQjhq8D/BV7AIvuphAztSSpIicpzd4jS sashimi@Aquarium"
-    ];
-    packages = with pkgs; [
-      tree
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHDvFbjVJZIjyUEGkkCgYl6HCCtgjzUcV+gNF5+db2vK huber@Kujira"
+      # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPTShXrZoI3BJQjhq8D/BV7AIvuphAztSSpIicpzd4jS sashimi@Aquarium"
     ];
     linger = true;
   };
@@ -137,9 +137,14 @@
     isNormalUser = true;
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIS2bO2QPK0yFPr+K/LVS3KkXR44sItK62CMkLABTJWY jliu@iMac"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH4fo0KYrlFSErX1uJufdTGrRLGc+lqHhMhyHjb+hJ6m jliu@Mac"
     ];
-    packages = with pkgs; [
-      iperf3
+  };
+
+  users.users.cliu = {
+    isNormalUser = true;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILW8YcRKUOBaZXbpdvvw2USe+WtNaEXNDktbt4U5ycjb cliu@MacBookPro"
     ];
   };
 
@@ -152,16 +157,78 @@
     "nix-command"
     "flakes"
   ];
+
+  nix.settings = {
+    substituters = [
+      "https://cuda-maintainers.cachix.org"
+    ];
+    trusted-public-keys = [
+      "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
+    ];
+  };
+
   environment.systemPackages = with pkgs; [
+    # Editors
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
+    neovim
+    nano
+
+    # archives
+    zip
+    xz
+    unzip
+    p7zip
+
+    # utils
+    ripgrep # recursively searches directories for a regex pattern
+    jq # A lightweight and flexible command-line JSON processor
+    yq-go # yaml processor https://github.com/mikefarah/yq
+    eza # A modern replacement for ‘ls’
+    fzf # A command-line fuzzy finder
+    tmux # Terminal multiplexer
+    hyperfine # Benchmarking tool
+
+    # networking tools
+    mtr # A network diagnostic tool
+    iperf3
+    dnsutils # dig + nslookup
+    ldns # replacement of dig, it provide the command drill
+    aria2 # A lightweight multi-protocol & multi-source command-line download utility
+    socat # replacement of openbsd-netcat
+    nmap # A utility for network discovery and security auditing
+    ipcalc # it is a calculator for the IPv4/v6 addresses
+    speedtest-cli # speedtest.net CLI tool
+
+    # system monitoring tools
+    btop
+    iotop # io monitoring
+    iftop # network monitoring
+    sysstat
+    lm_sensors # for sensors command
+    ethtool
+    pciutils # lspci
+    usbutils # lsusb
+
+    # Misc
     git
+    wget
     tldr
-    eza
+    tree
+    pfetch-rs # pretty system information tool
+
+    # C/C++
+    gcc
+    gnumake
+    cmake
+
+    # Python
+    python3
+
     # useful for docker/podman
     dive
     podman-tui
     docker-compose
+
   ];
 
   environment.variables.EDITOR = "nvim";
@@ -207,11 +274,9 @@
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [
     5201
-    25565
   ];
   networking.firewall.allowedUDPPorts = [
     5201
-    25565
   ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
@@ -221,46 +286,6 @@
   # accidentally delete configuration.nix.
 
   # system.copySystemConfiguration = true;
-
-  # Enable OpenGL
-  hardware.graphics = {
-    enable = true;
-  };
-
-  # -- https://nixos.wiki/wiki/Nvidia --
-  # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = [ "nvidia" ];
-
-  hardware.nvidia = {
-
-    # Modesetting is required.
-    modesetting.enable = true;
-
-    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-    # Enable this if you have graphical corruption issues or application crashes after waking
-    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
-    # of just the bare essentials.
-    powerManagement.enable = false;
-
-    # Fine-grained power management. Turns off GPU when not in use.
-    # Experimental and only works on modern Nvidia GPUs (Turing or newer).
-    powerManagement.finegrained = false;
-
-    # Use the NVidia open source kernel module (not to be confused with the
-    # independent third-party "nouveau" open source driver).
-    # Support is limited to the Turing and later architectures. Full list of
-    # supported GPUs is at:
-    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
-    # Only available from driver 515.43.04+
-    open = false;
-
-    # Enable the Nvidia settings menu,
-    # accessible via `nvidia-settings`.
-    nvidiaSettings = true;
-
-    # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.

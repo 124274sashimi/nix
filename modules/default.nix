@@ -14,5 +14,6 @@
     ./zfs.nix
     ./minecraft-server.nix
     ./filebrowser
+    # ./cuda.nix
   ];
 }
