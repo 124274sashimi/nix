@@ -126,9 +126,8 @@
       "docker"
     ];
     openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOWtHg2vvIXWFOvy6UoicvBQM9jItyOCOhoCZy1rkj1Y hubertliu100@gmail.com"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHDvFbjVJZIjyUEGkkCgYl6HCCtgjzUcV+gNF5+db2vK huber@Kujira"
-      # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPTShXrZoI3BJQjhq8D/BV7AIvuphAztSSpIicpzd4jS sashimi@Aquarium"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOWtHg2vvIXWFOvy6UoicvBQM9jItyOCOhoCZy1rkj1Y sashimi@Sakana"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHDvFbjVJZIjyUEGkkCgYl6HCCtgjzUcV+gNF5+db2vK sashimi@Kujira"
     ];
     linger = true;
   };
