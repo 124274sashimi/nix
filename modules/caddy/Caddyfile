@@ -35,6 +35,16 @@ status.sashimii.com {
     reverse_proxy localhost:3001
 }
 
+mlc.sashimii.com {
+    log {
+        format console
+	output file /var/log/caddy/access.log
+    }
+    root /scratch/mlc
+    file_server
+}
+
+
 ismyhouseonfire.sashimii.com {
     log {
         format console
