@@ -44,9 +44,9 @@
       };
       datasets."zpool/scratch" = {
         autosnap = true;
-	autoprune = true;
-	recursive = true;
-	daily = 14;
+        autoprune = true;
+        recursive = true;
+        daily = 14;
       };
     };
     syncoid = {

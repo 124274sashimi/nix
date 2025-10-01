@@ -16,6 +16,11 @@
     ./hardware-configuration.nix
   ];
 
+        # link flake source
+          environment.etc."flake-source".source = inputs.self;
+
+        # environment.etc."flake-source".source = self;
+
   # Allow Unfree software
   nixpkgs.config.allowUnfree = true;
   # Allow CUDA

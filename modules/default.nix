@@ -13,7 +13,9 @@
     ./ddclient
     ./zfs.nix
     ./minecraft-server.nix
+    ./factorio-server.nix
     ./filebrowser
+    ./authelia
     # ./cuda.nix
   ];
 }

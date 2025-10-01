@@ -46,6 +46,7 @@
       nixosConfigurations.hamachi = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
+
         modules = [
           # Import the previous configuration.nix we used,
           # so the old configuration file still takes effect

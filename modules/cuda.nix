@@ -31,12 +31,16 @@
   ];
   # __structuredAttrs = true;
   # strictDeps = true;
-  environment.sessionVariables = let ct = pkgs.cudaPackages.cudatoolkit; in {
-    CUDA_HOME = ct;
-    CUDA_PATH = ct;
-    PATH = "${ct}/bin";
-    LD_LIBRARY_PATH = "${ct}/lib:${ct.lib}/lib";
-    # LD_LIBRARY_PATH = '/run/opengl-driver/lib:/run/opengl-driver-32/lib:${ct}/lib:${ct.lib}/lib'
-    # LD_LIBRARY_PATH = '/run/opengl-driver/lib:/run/opengl-driver-32/lib:${ct}/lib:${ct.lib}/lib'
-  };
+  environment.sessionVariables =
+    let
+      ct = pkgs.cudaPackages.cudatoolkit;
+    in
+    {
+      CUDA_HOME = ct;
+      CUDA_PATH = ct;
+      PATH = "${ct}/bin";
+      LD_LIBRARY_PATH = "${ct}/lib:${ct.lib}/lib";
+      # LD_LIBRARY_PATH = '/run/opengl-driver/lib:/run/opengl-driver-32/lib:${ct}/lib:${ct.lib}/lib'
+      # LD_LIBRARY_PATH = '/run/opengl-driver/lib:/run/opengl-driver-32/lib:${ct}/lib:${ct.lib}/lib'
+    };
 }

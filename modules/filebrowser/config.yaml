@@ -7,6 +7,8 @@ server:
     - path: "/bulk"
       # config: defaultEnabled
     - path: "/data"
+auth:
+  tokenExpirationHours: 8
 userDefaults:
   preview:
     image: true
