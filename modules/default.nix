@@ -16,6 +16,6 @@
     ./factorio-server.nix
     ./filebrowser
     ./authelia
-    # ./cuda.nix
+    ./cuda.nix
   ];
 }

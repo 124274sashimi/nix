@@ -68,7 +68,7 @@
               sessionSecretFile = hostConfig.age.secrets.authelia-session-secret.path;
               storageEncryptionKeyFile = hostConfig.age.secrets.authelia-storage-encryption-key.path;
             };
-            settingsFiles = ["/etc/authelia-main/config.yml"];
+            settingsFiles = [ "/etc/authelia-main/config.yml" ];
           };
         };
 
@@ -83,7 +83,6 @@
         users.groups.authelia-main.gid = hostConfig.users.groups.authelia-main.gid;
 
       };
-
 
   };
 }

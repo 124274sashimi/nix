@@ -11,6 +11,18 @@
 #
 # https://caddyserver.com/docs/caddyfile/concepts#addresses
 
+test.immich.sashimii.com {
+    log {
+        format console
+        output file /var/log/caddy/access.log
+    }
+    reverse_proxy 0.0.0.0:2283
+}
+
+test.locust.sashimii.com {
+  reverse_proxy localhost:8089
+}
+
 immich.sashimii.com {
     log {
         format console

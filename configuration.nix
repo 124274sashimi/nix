@@ -16,10 +16,10 @@
     ./hardware-configuration.nix
   ];
 
-        # link flake source
-          environment.etc."flake-source".source = inputs.self;
+  # link flake source
+  environment.etc."flake-source".source = inputs.self;
 
-        # environment.etc."flake-source".source = self;
+  # environment.etc."flake-source".source = self;
 
   # Allow Unfree software
   nixpkgs.config.allowUnfree = true;
@@ -227,6 +227,7 @@
 
     # Python
     python3
+    uv
 
     # useful for docker/podman
     dive

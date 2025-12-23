@@ -3,7 +3,8 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   virtualisation.oci-containers.containers = {
     factorio = {
       image = "factoriotools/factorio:latest";
@@ -24,8 +25,8 @@
 
   networking = {
     firewall = {
-      allowedTCPPorts = [27015];
-      allowedUDPPorts = [34197];
+      allowedTCPPorts = [ 27015 ];
+      allowedUDPPorts = [ 34197 ];
     };
   };
 

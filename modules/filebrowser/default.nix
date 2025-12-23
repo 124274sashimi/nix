@@ -20,6 +20,7 @@
           # Necessary files
           "/scratch/filebrowser/tmp:/home/filebrowser/tmp"
           "/persist/filebrowser/database.db:/database.db"
+          "/persist/filebrowser/database.db.bak:/database.db.bak"
           "${configFile}:/config.yaml"
         ];
         environment = {
