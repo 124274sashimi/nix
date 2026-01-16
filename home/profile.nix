@@ -90,14 +90,14 @@
   # basic configuration of git, please change to your own
   programs.git = {
     enable = true;
-    userName = "Hubert Liu";
-    userEmail = "hubertliu100@gmail.com";
 
     signing.signByDefault = true;
     signing.format = "ssh";
     signing.key = "~/.ssh/id_ed25519.pub";
 
-    extraConfig = {
+    settings = {
+      user.name = "Hubert Liu";
+      user.email = "hubertliu100@gmail.com";
       init.defaultBranch = "main";
     };
   };

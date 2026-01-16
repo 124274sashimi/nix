@@ -20,7 +20,7 @@
         monthly = 12;
         yearly = 3;
       };
-      datasets."backup" = {
+      datasets."pacific/safe" = {
         autoprune = true;
         recursive = true;
         frequently = 0;
@@ -52,9 +52,9 @@
     syncoid = {
       enable = true;
       commonArgs = [ "--no-sync-snap" ];
-      commands."backup" = {
+      commands."pacific" = {
         source = "zpool/safe";
-        target = "backup/safe";
+        target = "pacific/safe";
         recursive = true;
       };
     };

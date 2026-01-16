@@ -35,7 +35,7 @@
   ];
   boot.zfs.extraPools = [
     "zpool"
-    "backup"
+    "pacific"
   ];
 
   # Disable all sleep
