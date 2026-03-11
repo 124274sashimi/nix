@@ -17,5 +17,6 @@
     ./filebrowser
     ./authelia
     ./cuda.nix
+    ./beszel.nix
   ];
 }
