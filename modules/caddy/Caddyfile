@@ -11,17 +11,17 @@
 #
 # https://caddyserver.com/docs/caddyfile/concepts#addresses
 
-test.immich.sashimii.com {
-    log {
-        format console
-        output file /var/log/caddy/access.log
-    }
-    reverse_proxy 0.0.0.0:2283
-}
+# test.immich.sashimii.com {
+#     log {
+#         format console
+#         output file /var/log/caddy/access.log
+#     }
+#     reverse_proxy 0.0.0.0:2283
+# }
 
-test.locust.sashimii.com {
-  reverse_proxy localhost:8089
-}
+# test.locust.sashimii.com {
+#   reverse_proxy localhost:8089
+# }
 
 immich.sashimii.com {
     log {
@@ -47,14 +47,14 @@ status.sashimii.com {
     reverse_proxy localhost:3001
 }
 
-mlc.sashimii.com {
-    log {
-        format console
-	output file /var/log/caddy/access.log
-    }
-    root /scratch/mlc
-    file_server
-}
+# mlc.sashimii.com {
+#     log {
+#         format console
+# 	output file /var/log/caddy/access.log
+#     }
+#     root /scratch/mlc
+#     file_server
+# }
 
 
 ismyhouseonfire.sashimii.com {
