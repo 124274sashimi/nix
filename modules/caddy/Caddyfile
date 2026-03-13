@@ -28,7 +28,7 @@ immich.sashimii.com {
         format console
         output file /var/log/caddy/access.log
     }
-    reverse_proxy 192.168.100.6:2283
+    reverse_proxy localhost:2283
 }
 
 files.sashimii.com {

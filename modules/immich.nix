@@ -7,19 +7,10 @@
 {
   containers.immich = {
     autoStart = true;
-    privateNetwork = true;
-    hostAddress = "192.168.100.5";
-    localAddress = "192.168.100.6";
     bindMounts = {
       "/var/lib/immich" = {
         hostPath = "/persist/immich";
         isReadOnly = false;
-      };
-
-      # config container dns
-      "/etc/resolv.conf" = {
-        hostPath = "/etc/resolv.conf";
-        isReadOnly = true;
       };
 
       # "/dev/dri" = {
@@ -96,7 +87,7 @@
 
         # hardware = hostConfig.hardware;
 
-        networking.useHostResolvConf = lib.mkForce false;
+        networking.useHostResolvConf = true;
         system.stateVersion = "25.05";
 
         services.immich = {
