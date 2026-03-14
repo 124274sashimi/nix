@@ -26,6 +26,11 @@
       # to avoid problems caused by different versions of nixpkgs.
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    LazyVim = {
+      url = "github:matadaniel/LazyVim-module";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -61,6 +66,9 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.sashimi = import ./home/profile.nix;
+            home-manager.extraSpecialArgs = {
+              inherit inputs;
+            };
 
             # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
           }

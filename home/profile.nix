@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   home.username = "sashimi";
@@ -6,7 +11,12 @@
 
   imports = [
     ./fish.nix
+    inputs.LazyVim.homeManagerModules.default
   ];
+
+  programs.lazyvim = {
+    enable = true;
+  };
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
