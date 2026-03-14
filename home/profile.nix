@@ -23,7 +23,7 @@
     # here is some command line tools I use frequently
     # feel free to add your own or remove some of them
 
-    neovim # text editor
+    # neovim # text editor
 
     pfetch-rs # pretty system information tool
     nnn # terminal file manager
