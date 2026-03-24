@@ -8,6 +8,7 @@
 {
   imports = [
     ./caddy
+    ./docker
     ./immich.nix
     ./agenix-cli.nix
     ./ddclient

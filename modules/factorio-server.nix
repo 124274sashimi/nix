@@ -13,7 +13,7 @@
         "27015:27015/tcp"
       ];
       volumes = [
-        "/persist/factorio/space:/factorio"
+        "/persist/factorio/dez:/factorio"
       ];
       environment = {
         GENERATE_NEW_SAVE = "false";
