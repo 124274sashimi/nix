@@ -8,7 +8,7 @@
 {
   imports = [
     ./caddy
-    ./docker
+    # ./docker
     ./immich.nix
     ./agenix-cli.nix
     ./ddclient
@@ -19,5 +19,8 @@
     ./authelia
     ./cuda.nix
     ./beszel.nix
+    ./services/my
+
+    ./stacks/beszel-agent.nix
   ];
 }

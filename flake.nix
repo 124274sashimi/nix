@@ -18,6 +18,8 @@
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
 
+    quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
+
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
       # The `follows` keyword in inputs is used for inheritance.
@@ -38,6 +40,7 @@
       self,
       nixpkgs,
       nixpkgs-unstable,
+      quadlet-nix,
       home-manager,
       agenix,
       ...
@@ -58,6 +61,7 @@
           ./configuration.nix
           agenix.nixosModules.default
           ./modules
+          quadlet-nix.nixosModules.quadlet
 
           # make home-manager as a module of nixos
           # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
