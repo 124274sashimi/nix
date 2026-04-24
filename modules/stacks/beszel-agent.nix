@@ -7,11 +7,12 @@ in
     stack = {
       enable = true;
       security.enable = true;
+      security.readOnlyRootFilesystem = false; # Required to use gpu
 
       containers = {
         beszel-agent = {
           containerConfig = {
-            image = "henrygd/beszel-agent:0.18.7";
+            image = "henrygd/beszel-agent-nvidia:0.18.7";
             volumes = [
               "/etc/stacks/beszel-agent/beszel_agent_data:/var/lib/beszel-agent"
               # Expose podman socket to monitor containers
@@ -21,8 +22,12 @@ in
               LISTEN = "45886";
               KEY = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/NoIbUJQmV3sGbSVmNyZpg/BPZ7AY8OiRi63Le30a8";
               DOCKER_HOST = "unix:///run/podman/podman.sock";
+              GPU_COLLECTOR = "nvidia-smi";
             };
             networks = [ "host" ];
+            podmanArgs = [
+              "--gpus=all"
+            ];
           };
         };
       };
