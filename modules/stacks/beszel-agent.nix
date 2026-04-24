@@ -28,6 +28,11 @@ in
             podmanArgs = [
               "--gpus=all"
             ];
+            healthCmd = "/agent health";
+            healthInterval = "30s";
+            healthTimeout = "10s";
+            healthRetries = 3;
+            healthStartPeriod = "30s";
           };
         };
       };
