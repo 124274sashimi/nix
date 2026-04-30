@@ -7,20 +7,24 @@
 }:
 {
   imports = [
-    ./caddy
-    # ./docker
-    # ./immich.nix
-    ./agenix-cli.nix
-    ./ddclient
+    # Core
     ./zfs.nix
+    ./cuda.nix
+    ./agenix-cli.nix
+
+    # Networking
+    ./caddy
+    ./ddclient
+
+    # Services
+    ./authelia
+    ./beszel.nix
+    ./filebrowser
     ./minecraft-server.nix
     ./factorio-server.nix
-    ./filebrowser
-    ./authelia
-    ./cuda.nix
-    ./beszel.nix
-    ./services/my
 
+    # Containers
+    ./services/my
     ./stacks/beszel-agent.nix
     ./stacks/immich.nix
   ];
