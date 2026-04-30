@@ -9,7 +9,7 @@
   imports = [
     ./caddy
     # ./docker
-    ./immich.nix
+    # ./immich.nix
     ./agenix-cli.nix
     ./ddclient
     ./zfs.nix
@@ -22,5 +22,6 @@
     ./services/my
 
     ./stacks/beszel-agent.nix
+    ./stacks/immich.nix
   ];
 }

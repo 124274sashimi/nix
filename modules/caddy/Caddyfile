@@ -23,12 +23,16 @@
 #   reverse_proxy localhost:8089
 # }
 
+cp.sashimii.com {
+  reverse_proxy localhost:3923
+}
+
 immich.sashimii.com {
     log {
         format console
         output file /var/log/caddy/access.log
     }
-    reverse_proxy localhost:2283
+    reverse_proxy localhost:2383
 }
 
 files.sashimii.com {

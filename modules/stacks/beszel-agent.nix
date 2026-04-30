@@ -23,6 +23,7 @@ in
               KEY = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM/NoIbUJQmV3sGbSVmNyZpg/BPZ7AY8OiRi63Le30a8";
               DOCKER_HOST = "unix:///run/podman/podman.sock";
               GPU_COLLECTOR = "nvidia-smi";
+              NICS = "enp*";
             };
             networks = [ "host" ];
             podmanArgs = [
