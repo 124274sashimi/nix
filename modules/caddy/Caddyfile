@@ -1,92 +1,49 @@
 # The Caddyfile is an easy way to configure your Caddy web server.
 #
 # https://caddyserver.com/docs/caddyfile
-
-
-# The configuration below serves a welcome page over HTTP on port 80.  To use
-# your own domain name with automatic HTTPS, ensure your A/AAAA DNS record is
-# pointing to this machine's public IP, then replace `http://` with your domain
-# name.  Refer to the documentation for full instructions on the address
-# specification.
-#
 # https://caddyserver.com/docs/caddyfile/concepts#addresses
 
-# test.immich.sashimii.com {
-#     log {
-#         format console
-#         output file /var/log/caddy/access.log
-#     }
-#     reverse_proxy 0.0.0.0:2283
-# }
-
-# test.locust.sashimii.com {
-#   reverse_proxy localhost:8089
-# }
+(logging) {
+  log {args[0]} {
+    output file /var/log/caddy/access.log
+    format json
+  }
+}
 
 cp.sashimii.com {
   reverse_proxy localhost:3923
 }
 
 immich.sashimii.com {
-    log {
-        format console
-        output file /var/log/caddy/access.log
-    }
     reverse_proxy localhost:2383
+    import logging immich
 }
 
 files.sashimii.com {
-    log {
-        format console
-        output file /var/log/caddy/access.log
-    }
     reverse_proxy localhost:2284
+    import logging files
 }
 
 status.sashimii.com {
-    log {
-        format console
-        output file /var/log/caddy/access.log
-    }
     reverse_proxy localhost:3001
+    import logging status
 }
 
 system.sashimii.com {
     reverse_proxy localhost:3002
+    import logging system
 }
-
-# mlc.sashimii.com {
-#     log {
-#         format console
-# 	output file /var/log/caddy/access.log
-#     }
-#     root /scratch/mlc
-#     file_server
-# }
-
 
 ismyhouseonfire.sashimii.com {
-    log {
-        format console
-        output file /var/log/caddy/access.log
-    }
     respond "Probably Not!"
+    import logging ismyhouseonfire
 }
-# http:// {
 
-    # Set this path to your site's directory.
-    # root * /usr/share/caddy
+# Catches all requests that are not handled above:
+:80, :443 {
+  respond "Access denied" 403 {
+    close
+  }
+  import logging catchall
+}
 
-    # Enable the static file server.
-    # file_server
-
-    # Another common task is to set up a reverse proxy:
-    # reverse_proxy localhost:2283
-
-    # Or serve a PHP site through php-fpm:
-    # php_fastcgi localhost:9000
-
-    # Refer to the directive documentation for more options.
-    # https://caddyserver.com/docs/caddyfile/directives
-
-# }
