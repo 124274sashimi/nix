@@ -12,6 +12,7 @@
 
 cp.sashimii.com {
   reverse_proxy localhost:3923
+  import logging copyparty
 }
 
 immich.sashimii.com {
@@ -22,11 +23,6 @@ immich.sashimii.com {
 files.sashimii.com {
     reverse_proxy localhost:2284
     import logging files
-}
-
-status.sashimii.com {
-    reverse_proxy localhost:3001
-    import logging status
 }
 
 system.sashimii.com {
