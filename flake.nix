@@ -11,8 +11,8 @@
   };
 
   inputs = {
-    # NixOS official package source, using the nixos-25.11 branch here
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    # NixOS official package source, using the nixos-26.05 branch here
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     agenix.url = "github:ryantm/agenix";
@@ -21,7 +21,7 @@
     quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       # The `follows` keyword in inputs is used for inheritance.
       # Here, `inputs.nixpkgs` of home-manager is kept consistent with
       # the `inputs.nixpkgs` of the current flake,
@@ -29,10 +29,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    LazyVim = {
-      url = "github:matadaniel/LazyVim-module";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    lazyvim.url = "github:pfassina/lazyvim-nix";
   };
 
   outputs =
@@ -42,6 +39,7 @@
       nixpkgs-unstable,
       quadlet-nix,
       home-manager,
+      lazyvim,
       agenix,
       ...
     }:

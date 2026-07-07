@@ -11,12 +11,10 @@
 
   imports = [
     ./fish.nix
-    inputs.LazyVim.homeManagerModules.default
+    inputs.lazyvim.homeManagerModules.default
   ];
 
-  programs.lazyvim = {
-    enable = true;
-  };
+  programs.lazyvim.enable = true;
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
