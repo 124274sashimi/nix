@@ -12,7 +12,7 @@ in
       containers = {
         server = {
           containerConfig = {
-            image = "ghcr.io/immich-app/immich-server:v2.7.5";
+            image = "ghcr.io/immich-app/immich-server:v3.0.1";
             publishPorts = [ "127.0.0.1:2383:2283" ];
             volumes = [
               "/etc/localtime:/etc/localtime:ro"
@@ -29,7 +29,7 @@ in
 
         machine-learning = {
           containerConfig = {
-            image = "ghcr.io/immich-app/immich-machine-learning:v2.7.5-cuda";
+            image = "ghcr.io/immich-app/immich-machine-learning:v3.0.1-cuda";
             volumes = [ "/scratch/immich-model-cache:/cache" ];
             networkAliases = [ "machine-learning" ];
             podmanArgs = [
@@ -40,7 +40,7 @@ in
 
         redis = {
           containerConfig = {
-            image = "docker.io/valkey/valkey:9@sha256:3b55fbaa0cd93cf0d9d961f405e4dfcc70efe325e2d84da207a0a8e6d8fde4f9";
+            image = "docker.io/valkey/valkey:9@sha256:4963247afc4cd33c7d3b2d2816b9f7f8eeebab148d29056c2ca4d7cbc966f2d9";
             healthCmd = "redis-cli ping || exit 1";
             networkAliases = [ "redis" ];
             notify = "healthy";
