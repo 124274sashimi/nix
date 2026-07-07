@@ -5,6 +5,10 @@ server:
     - levels: "info|warning|error"
   sources:
     - path: "/bulk"
+      config:
+        defaultEnabled: true
+        createUserDir: true
+        defaultUserScope: "/"
       # config: defaultEnabled
     - path: "/data"
 auth:
