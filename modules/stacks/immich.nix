@@ -12,7 +12,7 @@ in
       containers = {
         server = {
           containerConfig = {
-            image = "ghcr.io/immich-app/immich-server:v3.0.1";
+            image = "ghcr.io/immich-app/immich-server:v3.2.4";
             publishPorts = [ "127.0.0.1:2383:2283" ];
             volumes = [
               "/etc/localtime:/etc/localtime:ro"
@@ -29,7 +29,7 @@ in
 
         machine-learning = {
           containerConfig = {
-            image = "ghcr.io/immich-app/immich-machine-learning:v3.0.1-cuda";
+            image = "ghcr.io/immich-app/immich-machine-learning:v3.2.4-cuda";
             volumes = [ "/scratch/immich-model-cache:/cache" ];
             networkAliases = [ "machine-learning" ];
             podmanArgs = [

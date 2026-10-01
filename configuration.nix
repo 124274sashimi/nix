@@ -133,6 +133,7 @@
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOWtHg2vvIXWFOvy6UoicvBQM9jItyOCOhoCZy1rkj1Y sashimi@Sakana"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHDvFbjVJZIjyUEGkkCgYl6HCCtgjzUcV+gNF5+db2vK sashimi@Kujira"
+      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBBoN8ZawPgDANuUKXJjepibx1Z5+I9arqFGs0EV3cc7jxZaPkazkovP9Yz45aI/L/PQIkVlFYzdyl5tJFIH6GyQ= sashimi@Temaki"
     ];
     linger = true;
   };

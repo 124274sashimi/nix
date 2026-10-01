@@ -12,7 +12,10 @@ in
       containers = {
         beszel-agent = {
           containerConfig = {
-            image = "henrygd/beszel-agent-nvidia:0.18.7";
+            image = "henrygd/beszel-agent-nvidia:0.20.0";
+            devices = [
+              "/dev/zfs:/dev/zfs"
+            ];
             volumes = [
               "/etc/stacks/beszel-agent/beszel_agent_data:/var/lib/beszel-agent"
               # Expose podman socket to monitor containers
