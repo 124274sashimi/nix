@@ -28,5 +28,8 @@
     ./services/my
     ./stacks/beszel-agent.nix
     ./stacks/immich.nix
+
+    # Other tools
+    ./claude.nix
   ];
 }
