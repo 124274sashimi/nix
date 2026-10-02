@@ -15,7 +15,7 @@
     # Networking
     ./caddy
     ./ddclient
-    # ./crowdsec.nix
+    ./crowdsec.nix
 
     # Services
     ./authelia
