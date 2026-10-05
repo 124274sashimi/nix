@@ -3,6 +3,18 @@
 # https://caddyserver.com/docs/caddyfile
 # https://caddyserver.com/docs/caddyfile/concepts#addresses
 
+{
+  # CrowdSec AppSec (WAF). IP bans are handled by the firewall bouncer, so
+  # only the `appsec` handler is used. The key is written by
+  # crowdsec-caddy-bouncer-register (modules/crowdsec.nix).
+  crowdsec {
+    api_url http://127.0.0.1:8081
+    api_key {file./var/lib/crowdsec-caddy-bouncer/api-key}
+    appsec_url http://127.0.0.1:7422
+  }
+  order appsec first
+}
+
 (logging) {
   log {args[0]} {
     output file /var/log/caddy/access.log {
@@ -13,21 +25,25 @@
 }
 
 cp.sashimii.com {
+  appsec
   reverse_proxy localhost:3923
   import logging copyparty
 }
 
 immich.sashimii.com {
+    appsec
     reverse_proxy localhost:2383
     import logging immich
 }
 
 files.sashimii.com {
+    appsec
     reverse_proxy localhost:2284
     import logging files
 }
 
 system.sashimii.com {
+    appsec
     reverse_proxy localhost:3002
     import logging system
 }
@@ -44,4 +60,3 @@ ismyhouseonfire.sashimii.com {
   }
   import logging catchall
 }
-

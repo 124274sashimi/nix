@@ -14,12 +14,17 @@ in
     enable = true;
     autoUpdateService = true;
 
-    hub.collections = [
+    hub = {
+      collections = [
       "crowdsecurity/linux" # sshd, base whitelists (private IP ranges)
       "crowdsecurity/caddy"
       "crowdsecurity/base-http-scenarios"
       "crowdsecurity/http-cve"
-    ];
+      "crowdsecurity/appsec-virtual-patching" # blocks known CVE exploits
+      "crowdsecurity/appsec-generic-rules"    # generic attack patterns
+      ];
+      appSecConfigs = [ "crowdsecurity/appsec-default" ];
+    };
 
     localConfig.acquisitions = [
       {
@@ -31,6 +36,13 @@ in
         source = "file";
         filenames = [ "/var/log/caddy/*.log" ];
         labels.type = "caddy";
+      }
+      {
+        source = "appsec";
+        name = "caddy-appsec";
+        listen_addr = "127.0.0.1:7422";
+        appsec_config = "crowdsecurity/appsec-default";
+        labels.type = "appsec";
       }
     ];
 
@@ -61,6 +73,41 @@ in
 
     # Read Caddy's access logs.
     { crowdsec.serviceConfig.SupplementaryGroups = [ config.services.caddy.group ]; }
+
+    # Registers Caddy's AppSec bouncer and writes its API key where Caddy can read
+    # it (the Caddyfile loads it with `{file.…}`). Same approach as
+    # crowdsec-firewall-bouncer-register.
+    {
+      crowdsec-caddy-bouncer-register = {
+        description = "Register Caddy as a CrowdSec bouncer";
+        after = [ "crowdsec.service" ];
+        wants = [ "crowdsec.service" ];
+        before = [ "caddy.service" ];
+        requiredBy = [ "caddy.service" ];
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+          StateDirectory = "crowdsec-caddy-bouncer";
+        };
+        script =
+          let
+            cscli = "${pkgs.util-linux}/bin/runuser -u ${cfg.user} -- ${lib.getExe' cfg.package "cscli"} -c /etc/crowdsec/config.yaml";
+            keyFile = "/var/lib/crowdsec-caddy-bouncer/api-key";
+          in
+          ''
+            set -euo pipefail
+            if ${cscli} bouncers list -o json | ${lib.getExe pkgs.jq} -e 'any(.[]; .name == "caddy")' >/dev/null; then
+              [ -s ${keyFile} ] && exit 0
+              # Registered, but the key is lost: start over.
+              ${cscli} bouncers delete caddy
+            fi
+            key=$(${cscli} bouncers add caddy -o raw)
+            install -m 0640 -g ${config.services.caddy.group} /dev/null ${keyFile}
+            printf '%s' "$key" > ${keyFile}
+          '';
+      };
+    }
 
     {
       # Runs as root before crowdsec: reclaims files left owned by the old
