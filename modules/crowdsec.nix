@@ -46,7 +46,43 @@ in
       }
     ];
 
-    # The module only fills in a default for `profiles`; keeping the default bans.
+    # The hub's appsec-vpatch scenario only counts *distinct* vpatch rules, so an
+    # IP hammering one rule (e.g. vpatch-env-access) is never banned. This bans
+    # on 5+ vpatch blocks of any kind within ~10s.
+    localConfig.scenarios = [
+      {
+        type = "leaky";
+        name = "local/appsec-vpatch-repeat";
+        description = "Ban IPs repeatedly triggering virtual patching rules";
+        filter = "evt.Meta.log_type == 'appsec-block' && evt.Meta.rule_name contains 'vpatch-'";
+        groupby = "evt.Meta.source_ip";
+        capacity = 4;
+        leakspeed = "10s";
+        blackhole = "1m";
+        labels = {
+          service = "http";
+          remediation = true;
+        };
+      }
+    ];
+
+    # Same as the module's default profiles, except IP bans escalate: 4h on the
+    # first offense, +4h for every earlier decision against that IP.
+    localConfig.profiles = [
+      {
+        name = "default_ip_remediation";
+        filters = [ "Alert.Remediation == true && Alert.GetScope() == 'Ip'" ];
+        decisions = [ { type = "ban"; duration = "4h"; } ];
+        duration_expr = "Sprintf('%dh', (GetDecisionsCount(Alert.GetValue()) + 1) * 4)";
+        on_success = "break";
+      }
+      {
+        name = "default_range_remediation";
+        filters = [ "Alert.Remediation == true && Alert.GetScope() == 'Range'" ];
+        decisions = [ { type = "ban"; duration = "4h"; } ];
+        on_success = "break";
+      }
+    ];
 
     settings = {
       # Everything that goes into config.yaml lives under `general`.
@@ -73,6 +109,11 @@ in
 
     # Read Caddy's access logs.
     { crowdsec.serviceConfig.SupplementaryGroups = [ config.services.caddy.group ]; }
+
+    # Local scenarios/parsers/profiles are installed via tmpfiles symlinks, so
+    # the unit never changes and nixos-rebuild doesn't restart crowdsec when
+    # they do. Hash them into the unit so it does.
+    { crowdsec.restartTriggers = [ (builtins.toJSON cfg.localConfig) ]; }
 
     # Registers Caddy's AppSec bouncer and writes its API key where Caddy can read
     # it (the Caddyfile loads it with `{file.…}`). Same approach as
