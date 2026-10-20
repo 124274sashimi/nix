@@ -8,6 +8,14 @@
 let
   cfg = config.services.crowdsec;
   stateDir = "/var/lib/crowdsec/state";
+
+  # AppSec drops any request whose body exceeds 10MB (the default
+  # max_body_size), which breaks Immich/copyparty uploads. `partial` inspects
+  # the first 10MB and lets the rest through.
+  appsecBodySize = (pkgs.formats.yaml { }).generate "appsec-body-size.yaml" {
+    name = "local/body-size";
+    on_load = [ { apply = [ "SetBodySizeExceededAction('partial')" ]; } ];
+  };
 in
 {
   services.crowdsec = {
@@ -41,7 +49,11 @@ in
         source = "appsec";
         name = "caddy-appsec";
         listen_addr = "127.0.0.1:7422";
-        appsec_config = "crowdsecurity/appsec-default";
+        # Later configs append their hooks to earlier ones.
+        appsec_configs = [
+          "crowdsecurity/appsec-default"
+          "local/body-size"
+        ];
         labels.type = "appsec";
       }
     ];
@@ -96,6 +108,12 @@ in
     };
   };
 
+  # Local hub items are picked up from /etc/crowdsec/<type>/; same mechanism the
+  # module uses for localConfig.scenarios.
+  systemd.tmpfiles.settings.crowdsec-local-appsec."/etc/crowdsec/appsec-configs/body-size.yaml"."L+" = {
+    argument = "${appsecBodySize}";
+  };
+
   # The register unit's DynamicUser + StateDirectory moves /var/lib/crowdsec
   # into /var/lib/private (root-only), locking out crowdsec.service and cscli.
   # A static crowdsec user exists, so run everything as that instead.
@@ -113,7 +131,7 @@ in
     # Local scenarios/parsers/profiles are installed via tmpfiles symlinks, so
     # the unit never changes and nixos-rebuild doesn't restart crowdsec when
     # they do. Hash them into the unit so it does.
-    { crowdsec.restartTriggers = [ (builtins.toJSON cfg.localConfig) ]; }
+    { crowdsec.restartTriggers = [ (builtins.toJSON cfg.localConfig) appsecBodySize ]; }
 
     # Registers Caddy's AppSec bouncer and writes its API key where Caddy can read
     # it (the Caddyfile loads it with `{file.…}`). Same approach as
